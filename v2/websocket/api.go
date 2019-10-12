@@ -3,7 +3,7 @@ package websocket
 import (
 	"context"
 	"fmt"
-	"github.com/bitfinexcom/bitfinex-api-go/v2"
+	"github.com/outprog/bitfinex-api-go/v2"
 )
 
 type FlagRequest struct {

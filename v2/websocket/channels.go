@@ -98,6 +98,12 @@ func (c *Client) handleChecksumChannel(chanId int64, checksum int) error {
 }
 
 func (c *Client) handlePublicChannel(chanID int64, channel, objType string, data []interface{}, raw_msg []byte) error {
+	defer func() {
+		if err := recover(); err != nil {
+			c.log.Errorf("handlePublicChannel recover success. err: %v", err)
+		}
+	}()
+
 	// unauthenticated data slice
 	// public data is returned as raw interface arrays, use a factory to convert to raw type & publish
 	if factory, ok := c.factories[channel]; ok {
@@ -136,7 +142,7 @@ func (c *Client) handlePublicChannel(chanID int64, channel, objType string, data
 
 func (c *Client) handlePrivateChannel(raw []interface{}) error {
 	// authenticated data slice, or a heartbeat
-	if val, ok := raw[1].(string); ok && val == "hb"{
+	if val, ok := raw[1].(string); ok && val == "hb" {
 		chanID, ok := raw[0].(float64)
 		if !ok {
 			c.log.Warningf("could not find chanID: %#v", raw)

@@ -161,7 +161,7 @@ func (w *ws) listenWriteChannel() {
 func (w *ws) listenWs() {
 	defer func() {
 		if err := recover(); err != nil {
-			w.log.Errorf("recover success. err: %v", err)
+			w.log.Errorf("listenWs recover success. err: %v", err)
 		}
 	}()
 
